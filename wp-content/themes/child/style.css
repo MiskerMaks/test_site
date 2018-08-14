@@ -3,3 +3,12 @@
  * Template: unite
  */
 @import url('../unite/style.css');
+
+.label.meta {
+	color: white;
+	font-size: 15px;
+}
+.meta_center{
+	text-align: center;
+}
+

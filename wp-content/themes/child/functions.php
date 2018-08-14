@@ -1,7 +1,7 @@
 <?php
 
 // register post type
-
+add_action( 'init', 'films_init' );
 function films_init(){
 	register_post_type('films', array(
 		'label'  => null,
@@ -78,4 +78,26 @@ function films_init(){
 	);
 }
 
-add_action( 'init', 'films_init' );
+
+
+add_shortcode( 'last_posts', 'lasts');
+function lasts($atts){
+	$atts = shortcode_atts( array(
+		'count' => 5
+		), $atts );
+
+	$args = array(
+		'post_type' => 'films',
+		'post_per_page' => $atts['count']
+		);
+	$out_posts = get_posts( $args );
+	$out = '<ul>';
+	foreach ($out_posts as $post) {
+		setup_postdata( $post );
+		$out .= '<li><a href="'. get_the_permalink($post->ID) .'">'. get_the_title($post->ID) .'</a></li>';
+	}
+	$out .= '</ul>';
+	wp_reset_postdata();
+
+	return $out;
+}
